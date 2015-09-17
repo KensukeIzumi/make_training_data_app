@@ -1,0 +1,2 @@
+class ReportedImagesController < ApplicationController
+end

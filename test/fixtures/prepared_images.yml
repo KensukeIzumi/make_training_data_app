@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  image_resource: MyString
+  view_count: 
+  delete_flag: 
+
+two:
+  image_resource: MyString
+  view_count: 
+  delete_flag: 
