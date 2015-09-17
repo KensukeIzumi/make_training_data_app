@@ -28,7 +28,6 @@ def update
   @categolized_image = CategolizedImage.find(params[:id])
   if (@categolized_image.user_id != current_user.id)
   @categolized_image.evaluation += 1 
-  @categolized_image.user_id = current_user.id
 
   @categolized_image.save
   redirect_to prepared_image_path(@categolized_image.prepared_image_id)
