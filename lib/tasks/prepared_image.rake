@@ -69,48 +69,71 @@ def insert_image(image_resource)
 client.close
 end
 =end
+urls = ["http://cookpad.com/user_kondates"]
+opts = {
+    depth_limit: 0
+}
+new_urls =Array.new()
+
+
+Anemone.crawl(urls, opts) do |anemone|
+    anemone.on_every_page do |page|
+        page.doc.xpath('//*[@id="main"]/div[5]/div/div[1]/*/a').each do |node|
+            url = node.attribute('href')
+            new_urls.push("http://cookpad.com#{url}")
+        end
+    end
+end
+
 
 opts = {
     depth_limit: 1
 }
 
-Anemone.crawl("http://cookpad.com/search", opts) do |anemone|
+Anemone.crawl(new_urls, opts) do |anemone|
+    anemone.focus_crawl do |page|
+      page.links.keep_if {|link|
+        link.to_s.match(
+                /http:\/\/cookpad.com\/user_kondates\/[0-9]*/)
+      }
+    end
+    anemone.on_every_page do |page|
+        page.doc.xpath('//*[@id="kondate_photo"]').each do |node|
+            image_resource = node.attribute('src')
+            puts image_resource
+    insert_image(image_resource)
+        end
+    end
+end
+
+
+=begin
+Anemone.crawl("http://cookpad.com/search/%E5%AE%9A%E9%A3%9F", opts) do |anemone|
 
     anemone.focus_crawl do |page|
       page.links.keep_if {|link|
         link.to_s.match(
-                /http:\/\/cookpad.com\/recipe\/.*/)
+                /http:\/\/cookpad.com\/user_kondates\/[0-9]*/)
       }
     end
 
     anemone.on_every_page do |page|
-        page.doc.xpath("//*[@id='main-photo']/img").each do |node|
-
-    puts 'hoge'
+        page.doc.xpath('//*[@id="kondate_photo"]').each do |node|
             image_resource = node.attribute('src')
             puts image_resource
-#            save_image(image_resource)
             insert_image(image_resource)
         end
-    end
-end
-=begin
-opts = {
-    depth_limit: 0
-}
-
-Anemone.crawl("http://cookpad.com/recipe/3397736", opts) do |anemone|
-    anemone.on_every_page do |page|
-        page.doc.xpath("//*[@id='main-photo']/img").each do |node|
-
-    puts 'hoge'
+        page.doc.xpath('//*[@id="main-photo"]/img').each do |node|
             image_resource = node.attribute('src')
             puts image_resource
-#            save_image(image_resource)
             insert_image(image_resource)
         end
+
     end
 end
 =end
 end
 end
+
+
+
