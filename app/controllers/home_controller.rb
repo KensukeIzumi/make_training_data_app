@@ -2,7 +2,7 @@ class HomeController < ApplicationController
   def index
     @user = current_user
 #ここで最初に渡す画像のIDをランダムで取得
-    prepared_images = PreparedImage.where(["view_count < ? and reported_count < ?",5,5])
+    prepared_images = PreparedImage.where(["view_count < ? and reported_count != ? ",5,5])
     number = prepared_images.count
     random_number = rand(number)
 

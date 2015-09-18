@@ -12,8 +12,10 @@ Rails.application.routes.draw do
   resources :categolized_images do
     resource :evaluations, only: [:create,:destroy]
   end
-
-  resources :reported_images
+ 
+  resources :prepared_images do 
+    resource :reports, only:[:create,:destroy]
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

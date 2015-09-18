@@ -18,7 +18,11 @@
 <input id = "categolize" type = "submit" value = "登録">
 </form>
 
-<%= link_to '不適切な画像として報告',prepared_image_path(@prepared_image), method: :patch,:id => "report" %>
+<%if  Report.exists?(:user_id =>"#{current_user.id}",:prepared_image_id => "#{@prepared_image.id}") %>
+<%= link_to '報告を取り消す',prepared_image_reports_path(@prepared_image.id), method: :delete  %>
+<%else%>
+<%= link_to '不適切な画像として報告',prepared_image_reports_path(@prepared_image.id),method: :post%>
+<%end%>
 
 <div class = "hint" >
 <p> 他のユーザーの分類</p>

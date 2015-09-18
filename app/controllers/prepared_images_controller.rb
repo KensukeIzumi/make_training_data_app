@@ -14,10 +14,6 @@ def show
 
   @categolized_images = CategolizedImage.where("prepared_image_id = ?",params[:id]).group("name").order("evaluation DESC").uniq
 
-
-
-
-
   prepared_images = PreparedImage.where(["view_count < ? and reported_count < ?",5,5])
   number = prepared_images.count
   random_number = rand(number)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150918050434) do
+ActiveRecord::Schema.define(version: 20150918085308) do
 
   create_table "categolized_images", force: :cascade do |t|
     t.integer  "start_x",           limit: 4
@@ -47,6 +47,13 @@ ActiveRecord::Schema.define(version: 20150918050434) do
   create_table "reported_images", force: :cascade do |t|
     t.integer  "prepared_iamge_id", limit: 4
     t.integer  "report_count",      limit: 4
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  create_table "reports", force: :cascade do |t|
+    t.integer  "user_id",           limit: 4
+    t.integer  "prepared_image_id", limit: 4
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
   end
