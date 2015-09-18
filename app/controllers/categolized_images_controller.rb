@@ -21,7 +21,11 @@ def create
    
     redirect_to prepared_image_path(params[:prepared_image_id])
 end  
-
+=begin
+def evaluated_by?(user)
+    Evaluation.where(user.id: user_id).exist?
+end
+=end
 
 def update   
 

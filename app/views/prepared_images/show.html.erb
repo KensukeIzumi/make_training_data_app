@@ -26,7 +26,12 @@
 <li>
 
 <%= categolized_image.name%>
-<%= link_to 'この分類を評価する',categolized_image_path(categolized_image.id), method: :patch,:id => "evaluate" %>
+<%if  Evaluation.exists?(:user_id =>"#{current_user.id}",:categolized_image_id => "#{categolized_image.id}") %>
+<%= link_to '評価を取り消す',categolized_image_evaluations_path(categolized_image.id),method: :delete%>
+<%else%>
+<%= link_to 'この分類を評価する',categolized_image_evaluations_path(categolized_image.id), method: :post  %>
+<%end%>
+
 
 </li>
 <% end %>

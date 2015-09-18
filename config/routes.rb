@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   resources :prepared_images 
 
   resources :categolized_images do
-    resource :evaluations, only: [:create,:deatroy]
+    resource :evaluations, only: [:create,:destroy]
   end
 
   resources :reported_images
