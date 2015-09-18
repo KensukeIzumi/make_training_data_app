@@ -9,9 +9,9 @@ Rails.application.routes.draw do
 
   resources :prepared_images 
 
-  resources :categolized_images
-  
-
+  resources :categolized_images do
+    resource :evaluations, only: [:create,:deatroy]
+  end
 
   resources :reported_images
 
