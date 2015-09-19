@@ -2,11 +2,11 @@ class HomeController < ApplicationController
   def index
     @user = current_user
 #ここで最初に渡す画像のIDをランダムで取得
-    prepared_images = PreparedImage.where(["view_count < ? and reported_count != ? ",5,5])
+    prepared_images = PreparedImage.where(["view_count < ? and delete_flag != ? ",5,1])
     number = prepared_images.count
     random_number = rand(number)
 
-    prepared_image = PreparedImage.where(["view_count < ? and reported_count < ?",5,5]).limit(1).offset(random_number)
+    prepared_image = PreparedImage.where(["view_count < ? and delete_flag != ?",5,1]).limit(1).offset(random_number)
     @prepared_image = prepared_image[0]
     
 #今月登録した枚数を取得
