@@ -1,0 +1,17 @@
+<p>管理画面</p>
+
+<p>評価の高いユーザー BEST5</p>
+<% count = 0%>
+<%@top_evaluations.each do |evaluation|%>
+<%count+= 1%>
+<li>
+第<%=count%>位：<%= User.find(evaluation[0]).username%>さん
+</li>
+<%end%>
+
+<p>不適切と報告された画像</p>
+<%@reported_images.each do |reported_image|%>
+<li>
+<%= link_to "#{reported_image.image_resource}"%>
+</li>
+<%end%>
