@@ -3,5 +3,6 @@ class PreparedImage < ActiveRecord::Base
   mount_uploader :image, ImageUploader
 
   has_many :categolized_images
-  has_one :reported_image
+  has_many :reports,dependent: :destroy
+
 end
