@@ -21,12 +21,12 @@ class HomeController < ApplicationController
     end
     @your_count = your_categolized_images.count
 #ユーザの評価を取得   
-    if CategolizedImage.where("user_id = ?",@user.id).group(:user_id).sum(:evaluation).empty?
-    your_evaluation = {@user.id => 0}
+    if Evaluation.where("user_id = ?",@user.id).count.nil?
+    @your_evaluation = 0
     else
-    your_evaluation = CategolizedImage.where("user_id = ?",@user.id).group(:user_id).sum(:evaluation)
+    Evaluation.where("user_id = ?",@user.id).count
+    @your_evaluation = Evaluation.where("user_id = ?",@user.id).count
     end
-    @your_evaluation = your_evaluation[@user.id]
 #今月の支払金を取得
     @your_salary = (@your_count + @your_evaluation)*10 
   end
