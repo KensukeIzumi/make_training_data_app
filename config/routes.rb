@@ -1,10 +1,15 @@
 Rails.application.routes.draw do
 
-  devise_for :users
+  get 'admin_home/index'
+
+  get 'admin_home/show'
+
+  devise_for :users 
+ 
   get 'home/index'
 
   get 'home/show'
-
+  
   root to: "home#index"
 
   resources :prepared_images 
@@ -14,7 +19,7 @@ Rails.application.routes.draw do
   end
  
   resources :prepared_images do 
-    resource :reports, only:[:create,:destroy]
+    resource :reports, only: [:create,:destroy]
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
