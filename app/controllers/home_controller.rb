@@ -1,5 +1,9 @@
 class HomeController < ApplicationController
   def index
+    if current_user.admin?
+    redirect_to admin_home_index_path
+    end
+
     @user = current_user
 #ここで最初に渡す画像のIDをランダムで取得
     prepared_images = PreparedImage.where(["view_count < ? and delete_flag != ? ",5,1])

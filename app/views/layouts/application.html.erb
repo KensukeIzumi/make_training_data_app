@@ -14,7 +14,7 @@
   <% if user_signed_in?%>
     Logged in as <strong><%= current_user.username %>様</strong>.
     <%= link_to 'プロフィール変更',edit_user_registration_path %>
-    <%= link_to 'ログアウト',destroy_user_session_path,method: :delete %>
+    <%= link_to 'ログアウト',destroy_user_session_path,method: :get %>
   <% else %>
     <%= link_to 'サインイン',new_user_registration_path %>
     <%= link_to 'ログイン',new_user_session_path %>
