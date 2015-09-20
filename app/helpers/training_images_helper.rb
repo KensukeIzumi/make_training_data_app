@@ -1,0 +1,2 @@
+module TrainingImagesHelper
+end

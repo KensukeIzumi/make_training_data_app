@@ -8,7 +8,9 @@ class AdminHomeController < ApplicationController
     evaluations = Evaluation.group("user_id").count
     @top_evaluations = evaluations.sort_by{|key,val| -val}[0..4]
 
-  end
+    @categolized_images = ActiveRecord::Base.connection.select_all("select * from prepared_images left join categolized_images on prepared_images.id = categolized_images.prepared_image_id group by name")
+    
+    end
 
   def show
   end
