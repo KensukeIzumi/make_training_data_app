@@ -22,6 +22,8 @@ Rails.application.routes.draw do
     resource :reports, only: [:create,:destroy]
   end
 
+  resources :training_images,only:[:new,:create,:show]
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

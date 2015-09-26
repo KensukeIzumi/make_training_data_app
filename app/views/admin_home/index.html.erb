@@ -3,32 +3,31 @@
 <p>評価の高いユーザー BEST5</p>
 <% count = 0%>
 <%@top_evaluations.each do |evaluation|%>
-<%count+= 1%>
-<li>
-第<%=count%>位：<%= User.find(evaluation[0]).username%>さん
-</li>
+    <%count+= 1%>
+    <li>
+    第<%=count%>位：<%= User.find(evaluation[0]).username%>さん
+    </li>
 <%end%>
 
 <p>不適切と報告された画像</p>
 <%@reported_images.each do |reported_image|%>
-<li>
-<%= link_to "#{reported_image.image_resource}"%>
-</li>
+    <li>
+    <%= link_to "確認する","#{reported_image.image_resource}"%>
+    </li>
 <%end%>
 
 <p>分類された画像</p>
-<% @categolized_images.each do |categolized_image|%>
-<%= form_for TrainingImage.new do |f|%>
-<li>
-<%= f.hidden_field :image_url, :value => "#{categolized_image["image_url"]}"%>
-<%= f.hidden_field :url, :value => "#{categolized_image["image_resource"]}"%>
-<%= f.hidden_field :name, :value => "#{categolized_image["name"]}"%>
-<%= f.hidden_field :start_x, :value => "#{categolized_image["start_x"]}"%>
-<%= f.hidden_field :start_y, :value => "#{categolized_image["start_y"]}"%>
-<%= f.hidden_field :end_x, :value => "#{categolized_image["end_x"]}"%>
-<%= f.hidden_field :end_y, :value => "#{categolized_image["end_y"]}"%>
-<%= f.submit "#{categolized_image["name"]}の画像をトリミングする。"%>
-</li>
+<%@categolized_images.each do |categolized_image|%>
+    <%= form_for TrainingImage.new do |f|%>
+        <p>
+        <%= f.hidden_field :image_path, :value => "#{categolized_image.prepared_image.image.url}"%>
+        <%= f.hidden_field :categolized_image_id, :value => "#{categolized_image.id}"%>
+        <%= f.hidden_field :name, :value => "#{categolized_image.name}"%>
+        <%= f.hidden_field :start_x, :value => "#{categolized_image.start_x}"%>
+        <%= f.hidden_field :start_y, :value => "#{categolized_image.start_y}"%>
+        <%= f.hidden_field :end_x, :value => "#{categolized_image.end_x}"%>
+        <%= f.hidden_field :end_y, :value => "#{categolized_image.end_y}"%>
+        <%= f.submit "#{categolized_image.name}の画像をトリミングする。"%>
+        </p>
+    <%end%>
 <%end%>
-<%end%>
-

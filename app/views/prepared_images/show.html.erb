@@ -7,77 +7,77 @@
 <img src=<%=@prepared_image.image.url%> id = "target" >
 
 <form method = "post" action = "<%= categolized_images_path%>">
-<input name = "start_x" value = "始点のx座標">
-<input name = "start_y" value = "始点のy座標"></br>
-<input name = "end_x" value = "終点のx座標">
-<input name = "end_y" value = "終点のy座標"></br>
-<input name = "name" value = "名前">
-<input type = "hidden" name = "user_id" value = "<%=current_user.id %>">
-<input type = "hidden" name = "prepared_image_id" value = "<%=@prepared_image.id%>">
+  <input name = "start_x" value = "始点のx座標">
+  <input name = "start_y" value = "始点のy座標"></br>
+  <input name = "end_x" value = "終点のx座標">
+  <input name = "end_y" value = "終点のy座標"></br>
+  <input name = "name" value = "名前">
+  <input type = "hidden" name = "user_id" value = "<%=current_user.id %>">
+  <input type = "hidden" name = "prepared_image_id" value = "<%=@prepared_image.id%>">
 
-<input id = "categolize" type = "submit" value = "登録">
+  <input id = "categolize" type = "submit" value = "登録">
 </form>
 
 <%if  Report.exists?(:user_id =>"#{current_user.id}",:prepared_image_id => "#{@prepared_image.id}") %>
-<%= link_to '報告を取り消す',prepared_image_reports_path(@prepared_image.id), method: :delete  %>
+  <%= link_to '報告を取り消す',prepared_image_reports_path(@prepared_image.id), method: :delete  %>
 <%else%>
-<%= link_to '不適切な画像として報告',prepared_image_reports_path(@prepared_image.id),method: :post%>
+  <%= link_to '不適切な画像として報告',prepared_image_reports_path(@prepared_image.id),method: :post%>
 <%end%>
 
 <div class = "hint" >
-<p> 他のユーザーの分類</p>
-<% @categolized_images.each do |categolized_image|%>
-<li>
+  <p> 他のユーザーの分類</p>
+  <% @categolized_images.each do |categolized_image|%>
+    <li>
 
-<%= categolized_image.name%>
-<%if  Evaluation.exists?(:user_id =>"#{current_user.id}",:categolized_image_id => "#{categolized_image.id}") %>
-<%= link_to '評価を取り消す',categolized_image_evaluations_path(categolized_image.id),method: :delete%>
-<%else%>
-<%= link_to 'この分類を評価する',categolized_image_evaluations_path(categolized_image.id), method: :post  %>
-<%end%>
+    <%= categolized_image.name%>
+    <%if  Evaluation.exists?(:user_id =>"#{current_user.id}",:categolized_image_id => "#{categolized_image.id}") %>
+      <%= link_to '評価を取り消す',categolized_image_evaluations_path(categolized_image.id),method: :delete%>
+    <%else%>
+      <%= link_to 'この分類を評価する',categolized_image_evaluations_path(categolized_image.id), method: :post  %>
+    <%end%>
 
 
-</li>
-<% end %>
+    </li>
+  <% end %>
 </div>
 
 <%= link_to '次の画像へ', "/prepared_images/#{@random_number}"%>
 <!--
 <script type="text/javascript">
-$(function(){
-        var hasSelected = function(data){
-        
-        var x1 = data.x;
-        var y1 = data.y;
-        
-        var x2 = data.x2;
-        var y2 = data.y2;
+  $(function(){
+      var hasSelected = function(data){
 
-        $(':text[name="start_x"]').val(x1);
-        $(':text[name="start_y"]').val(y1);
-        $(':text[name="end_x"]').val(x2);
-        $(':text[name="end_y"]').val(y2);
+      var x1 = data.x;
+      var y1 = data.y;
 
-        console.log('選択領域は(' + x1 + ',' + y1 + ')から(' + x2 + ',' + y2 + ') までです。')};
-        
-        var hasChanged = function(){
-        };
+      var x2 = data.x2;
+      var y2 = data.y2;
 
-        var hasReleased = function(){
-        };
+      $(':text[name="start_x"]').val(x1);
+      $(':text[name="start_y"]').val(y1);
+      $(':text[name="end_x"]').val(x2);
+      $(':text[name="end_y"]').val(y2);
 
-        $('#target').Jcrop({
-              onSelect: hasSelected,
-              onChange: hasChanged,
-              onRelease: hasReleased
-              });
+      console.log('選択領域は(' + x1 + ',' + y1 + ')から(' + x2 + ',' + y2 + ') までです。')};
+
+      var hasChanged = function(){
+      };
+
+      var hasReleased = function(){
+      };
+
+      $('#target').Jcrop({
+onSelect: hasSelected,
+onChange: hasChanged,
+onRelease: hasReleased
+});
 
 });
 $("#categolize").click(function(){
-        alert("画像を１件登録しました。");
-        });
+    alert("画像を１件登録しました。");
+    });
 $("#report").click(function(){
-        alert("ご協力ありがとうございます。");
-        });
+    alert("ご協力ありがとうございます。");
+    });
 
-</script>-->
+  </script>-->
