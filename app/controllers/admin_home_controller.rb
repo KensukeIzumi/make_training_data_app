@@ -9,7 +9,7 @@ class AdminHomeController < ApplicationController
     evaluations = Evaluation.group("user_id").count
     @top_evaluations = evaluations.sort_by{|key,val| -val}[0..4]
 
-    @categolized_images = CategolizedImage.group('name,prepared_image_id').where("saved != 1")
+    @categolized_images = CategolizedImage.group('name,prepared_image_id').where.not(saved: 1)
     end
 
   def show
