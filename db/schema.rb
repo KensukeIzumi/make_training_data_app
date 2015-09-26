@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150919132047) do
+ActiveRecord::Schema.define(version: 20150926031011) do
 
   create_table "categolized_images", force: :cascade do |t|
     t.integer  "start_x",           limit: 4
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20150919132047) do
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
     t.integer  "evaluation",        limit: 4,   default: 0
+    t.integer  "saved",             limit: 4,   default: 0
   end
 
   add_index "categolized_images", ["prepared_image_id"], name: "index_categolized_images_on_prepared_image_id", using: :btree

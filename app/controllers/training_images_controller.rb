@@ -5,37 +5,31 @@ class TrainingImagesController < ApplicationController
 
   def create
     parameters = params[:training_image]
-    url = parameters["url"]
+    image_path = parameters[:image_path]
 
-    uploader = ImageUploader.new
-    uploader.download! "#{url}"
+    original = Magick::Image.read("#{Rails.root}/public#{image_path}").first
 
-    original = Magick::Image.read("#{Rails.root}/public#{uploader.image.url}").first
+    start_x = parameters["start_x"].to_i
+    start_y = parameters["start_y"].to_i
+    w = parameters["end_x"].to_i - start_x
+    h = parameters["end_y"].to_i - start_y
 
-    w = params["end_x"].to_i - params["end_y"].to_i
-    h = params["start_y"].to_i - params["start_x"].to_i
-    image = original.crop(params["start_x"].to_i,params["start_y"].to_i,w,h)
-    image.write("#{params["name"]}.jpg")
+    image = original.crop("#{start_x}".to_i,"#{start_y}".to_i,"#{w}".to_i,"#{h}".to_i)
 
-    uploader = ImageUploader.new
-    uploader.download! image
-
-    @training_image.image = uploader
-    @training_image.name = "#{params["name"]}"
-
-    @training_image.save
-
-=begin
-    training_image = Training_image.new
-    training_image.image = uploader
-    training_image.save
+    image.write("#{Rails.root}/app/assets/images/#{parameters["categolized_image_id"]}.jpg")
 
     @training_image = TrainingImage.new
-    original = Magick::Image.read(params[:image_resource]).first
-    image = original.crop(params[:start_x],params[:start_y],"#{params[:end_x]-params[:start_x]}","#{params[:start_y]-params[:end_y]}")
-    image.write(@training_image)
+    @training_image.image = File.open("#{Rails.root}/app/assets/images/#{parameters["categolized_image_id"]}.jpg")
+    @training_image.name = "#{parameters["name"]}"
+
+    @training_image.save
+=begin
+トリミングして保存された分類分けをマーキング、以降表示しないようにする。
 =end
-    redirect_to admin_home_index_path
+    @categolized_image = CategolizedImage.find("#{parameters["categolized_image_id"]}")
+    @categolized_image.saved = 1
+    @categolized_image.save
+    redirect_to training_image_path(@training_image)
   end
 
   def show

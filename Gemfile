@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 gem 'nokogiri'
 gem 'anemone'
 gem 'carrierwave'
-gem 'rmagick'
+gem 'rmagick','~> 2.15.4'
 
 gem 'jquery-ui-rails'
 gem 'execjs'

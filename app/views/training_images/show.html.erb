@@ -1,2 +1,14 @@
-<h1>TrainingImages#show</h1>
-<p>Find me in app/views/training_images/show.html.erb</p>
+<%@training_image = TrainingImage.find(params[:id])%>
+<p>
+name:
+<%= @training_image.name%>
+</p>
+<p>
+image
+<% if @training_image.image?%>
+  <%= image_tag @training_image.image.url%>
+<%end%>
+</p>
+
+<%= link_to "ホーム画面へ",admin_home_index_path %>
+
