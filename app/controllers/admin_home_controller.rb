@@ -6,12 +6,9 @@ class AdminHomeController < ApplicationController
 
     @reported_images = PreparedImage.where("delete_flag = ? ",1)
 
-    evaluations = Evaluation.group("user_id").count
+    evaluations = Evaluation.group("evaluated_user_id").count
     @top_evaluations = evaluations.sort_by{|key,val| -val}[0..4]
 
-    @categolized_images = CategolizedImage.group('name,prepared_image_id').where.not(saved: 1)
+    @categolized_images = CategolizedImage.group("prepared_image_id").where.not(saved: 1)
     end
-
-  def show
-  end
 end

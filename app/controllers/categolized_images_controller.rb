@@ -2,7 +2,7 @@
 
 class CategolizedImagesController < ApplicationController
 
-def create
+  def create
     @categolized_image = CategolizedImage.new
     @categolized_image.name = params[:name]
     @categolized_image.start_x = params[:start_x]
@@ -12,39 +12,18 @@ def create
     @categolized_image.user_id = params[:user_id]
     @categolized_image.prepared_image_id = params[:prepared_image_id]
 
-    user = User.find(params[:user_id])
-    user.categolize_count = user.categolize_count + 1
 
-    user.save
-    @categolized_image.save
-
-   
-    redirect_to prepared_image_path(params[:prepared_image_id])
-end  
-=begin
-def evaluated_by?(user)
-    Evaluation.where(user.id: user_id).exist?
-end
-=end
-
-def update   
-
-  @categolized_image = CategolizedImage.find(params[:id])
-  if (@categolized_image.user_id != current_user.id)
-  @categolized_image.evaluation += 1 
-
-  @categolized_image.save
-  redirect_to prepared_image_path(@categolized_image.prepared_image_id)
-  
-  else
-  redirect_to prepared_image_path(@categolized_image.prepared_image_id),:notice => "ご自分の分類は評価できません。"
+    if @categolized_image.save
+      redirect_to prepared_image_path(params[:prepared_image_id])
+    else
+      redirect_to prepared_image_path(params[:prepared_image_id]),alert: "履歴と重複しています。評価ボタンを押して次の分類を進めてください、なお評価した回数はそのままあなたの登録枚数に加算されます。"
+    end 
   end
 
-end
 
-protect_from_forgery except: [:create, :new]
+  protect_from_forgery except: [:create, :new]
 
-private
+  private
   def categolized_image_params
     params[:categolized_image].permit(:start_x,:start_y,:end_x,:end_y,:name,:user_id,:prepared_image_id)
   end

@@ -18,7 +18,7 @@
   <input id = "categolize" type = "submit" value = "登録">
 </form>
 
-<%if  Report.exists?(:user_id =>"#{current_user.id}",:prepared_image_id => "#{@prepared_image.id}") %>
+<%if Report.exists?(:user_id =>"#{current_user.id}",:prepared_image_id => "#{@prepared_image.id}") %>
   <%= link_to '報告を取り消す',prepared_image_reports_path(@prepared_image.id), method: :delete  %>
 <%else%>
   <%= link_to '不適切な画像として報告',prepared_image_reports_path(@prepared_image.id),method: :post%>
@@ -30,12 +30,11 @@
     <li>
 
     <%= categolized_image.name%>
-    <%if  Evaluation.exists?(:user_id =>"#{current_user.id}",:categolized_image_id => "#{categolized_image.id}") %>
+    <%if Evaluation.exists?(:evaluate_user_id =>"#{current_user.id}",:categolized_image_id => "#{categolized_image.id}") %>
       <%= link_to '評価を取り消す',categolized_image_evaluations_path(categolized_image.id),method: :delete%>
     <%else%>
-      <%= link_to 'この分類を評価する',categolized_image_evaluations_path(categolized_image.id), method: :post  %>
+      <%= link_to 'この分類を評価する',categolized_image_evaluations_path(categolized_image.id), method: :post%>
     <%end%>
-
 
     </li>
   <% end %>
