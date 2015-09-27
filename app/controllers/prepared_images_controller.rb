@@ -26,14 +26,6 @@ def index
 #  @prepared_image.save
   @random_number = number 
 end
-=begin
-def update
-  @prepared_image = PreparedImage.find(params[:id])
-  @prepared_image.reported_count += 1
-  @prepared_image.save
-  redirect_to prepared_image_path(params[:id])
-end
-=end
 private  
   def prepared_image_params
     params.require(:prepared_image).permit(:image,:image_resource,:view_count,:delete_flag)
