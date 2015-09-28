@@ -31,7 +31,7 @@ class HomeController < ApplicationController
     if Evaluation.where("evaluated_user_id = ?",@user.id).count.nil?
       @your_evaluation = 0
     else
-      @your_evaluation = Evaluation.where("evaluated_user_id = ?",@user.id).count
+      @your_evaluation = Evaluation.where("evaluated_user_id = ?",@user.id).sum(:evaluation)
     end
     #今月の支払金を取得
     @your_salary = (@your_count + @your_evaluation)*10 

@@ -33,7 +33,8 @@
     <%if Evaluation.exists?(:evaluate_user_id =>"#{current_user.id}",:categolized_image_id => "#{categolized_image.id}") %>
       <%= link_to '評価を取り消す',categolized_image_evaluations_path(categolized_image.id),method: :delete%>
     <%else%>
-      <%= link_to 'この分類を評価する',categolized_image_evaluations_path(categolized_image.id), method: :post%>
+      <%= link_to 'この分類を評価する',categolized_image_evaluations_path(categolized_image.id, evaluation: 1), method: :post%>
+      <%= link_to 'この分類を評価しない',categolized_image_evaluations_path(categolized_image.id, evaluation: -1), method: :post%>
     <%end%>
 
     </li>
