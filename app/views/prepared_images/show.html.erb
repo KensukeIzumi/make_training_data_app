@@ -1,8 +1,8 @@
-
+<%= stylesheet_link_tag"prepared_images",:media=>"all"%>
 <%= javascript_include_tag "application" %> 
 
-<%= link_to 'マイページへ', home_index_path %>
-<p>食品を囲って下のフォームに食品名を入力してください</p>
+<p>・食品を囲って下のフォームに食品名を入力してください</p>
+<p>・適切な分類名が既に履歴一覧に表示されている場合、評価ボタンを押して次に進んでください。</p>
 
 <img src=<%=@prepared_image.image.url%> id = "target" >
 
@@ -24,7 +24,7 @@
   <%= link_to '不適切な画像として報告',prepared_image_reports_path(@prepared_image.id),method: :post%>
 <%end%>
 
-<div class = "hint" >
+<div class = "other_categolizations" >
   <p> 他のユーザーの分類</p>
   <% @categolized_images.each do |categolized_image|%>
     <li>
@@ -40,7 +40,8 @@
   <% end %>
 </div>
 
-<%= link_to '次の画像へ', "/prepared_images/#{@random_number}"%>
+<%= link_to '次の画像へ', "/prepared_images/#{@random_number}",class: 'button_radius'%>
+<%= link_to 'マイページへ', home_index_path,class: 'button_radius' %>
 <!--
 <script type="text/javascript">
   $(function(){
