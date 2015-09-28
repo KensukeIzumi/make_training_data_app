@@ -1,15 +1,15 @@
-
-  <p>ようこそ<%= current_user.username %>様</p>
-<div class= "infomation">
-  <p>
-  今月の登録枚数: <%= @your_count%>
-  </p>
-  <p>
-  あなたの評価: <%= @your_evaluation%>
-  </p>
-  <p>
-  今月の給料: <%= @your_salary%> 円
-  </p>
+<%= stylesheet_link_tag "home",:media=> "all"%>
+<div class = "main">
+  <div class= "information">
+    <p>
+    今月の登録枚数: <%= @your_count%>
+    </p>
+    <p>
+    あなたの評価: <%= @your_evaluation%>
+    </p>
+    <p>
+    今月の給料: <%= @your_salary%> 円
+    </p>
+  </div>
+  <%= link_to '画像分類へ', prepared_image_path(@prepared_image), class:"button_radius" %>
 </div>
-<%= link_to '画像分類へ',prepared_image_path(@prepared_image) %>
-
