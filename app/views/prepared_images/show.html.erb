@@ -7,10 +7,10 @@
 <img src=<%=@prepared_image.image.url%> id = "target" >
 
 <form method = "post" action = "<%= categolized_images_path%>">
-  <input name = "start_x" value = "始点のx座標">
-  <input name = "start_y" value = "始点のy座標"></br>
-  <input name = "end_x" value = "終点のx座標">
-  <input name = "end_y" value = "終点のy座標"></br>
+  <input name = "start_x" value = "始点のx座標" readonly = "readonly">
+  <input name = "start_y" value = "始点のy座標" readonly = "readonly"></br>
+  <input name = "end_x" value = "終点のx座標" readonly = "readonly">
+  <input name = "end_y" value = "終点のy座標" readonly = "readonly"></br>
   <input name = "name" value = "名前">
   <input type = "hidden" name = "user_id" value = "<%=current_user.id %>">
   <input type = "hidden" name = "prepared_image_id" value = "<%=@prepared_image.id%>">
@@ -43,42 +43,4 @@
 
 <%= link_to '次の画像へ', "/prepared_images/#{@random_number}",class: 'button_radius'%>
 <%= link_to 'マイページへ', home_index_path,class: 'button_radius' %>
-<!--
-<script type="text/javascript">
-  $(function(){
-      var hasSelected = function(data){
 
-      var x1 = data.x;
-      var y1 = data.y;
-
-      var x2 = data.x2;
-      var y2 = data.y2;
-
-      $(':text[name="start_x"]').val(x1);
-      $(':text[name="start_y"]').val(y1);
-      $(':text[name="end_x"]').val(x2);
-      $(':text[name="end_y"]').val(y2);
-
-      console.log('選択領域は(' + x1 + ',' + y1 + ')から(' + x2 + ',' + y2 + ') までです。')};
-
-      var hasChanged = function(){
-      };
-
-      var hasReleased = function(){
-      };
-
-      $('#target').Jcrop({
-onSelect: hasSelected,
-onChange: hasChanged,
-onRelease: hasReleased
-});
-
-});
-$("#categolize").click(function(){
-    alert("画像を１件登録しました。");
-    });
-$("#report").click(function(){
-    alert("ご協力ありがとうございます。");
-    });
-
-  </script>-->

@@ -7,8 +7,10 @@ class AdminHomeController < ApplicationController
     @reported_images = PreparedImage.where("delete_flag = ? ",1)
 
     evaluations = Evaluation.group("evaluated_user_id").sum(:evaluation)
-    @top_evaluations = evaluations.sort_by{|key,val| -val}[0..4]
+    @top_evaluations = evaluations.sort_by{|key,val| -val}[0..2]
 
     @categolized_images = CategolizedImage.group("prepared_image_id").where.not(saved: 1)
-    end
+
+    @prepared_images = PreparedImage.joins(:categolized_images).uniq(:id)
+  end
 end

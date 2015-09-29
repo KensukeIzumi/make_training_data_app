@@ -2,40 +2,107 @@
 
 <p>管理画面</p>
 
-<p>評価の高いユーザー BEST5</p>
-<% count = 0%>
-<%@top_evaluations.each do |evaluation|%>
-  <%count+= 1%>
+<hr color = "green">
+
+<p>評価の高いユーザー BEST3</p>
+
+<%@top_evaluations.each_with_index do |evaluation,i|%>
   <li>
-  第<%=count%>位：<%= User.find(evaluation[0]).username%>さん
+  第<%=i + 1%>位：<%= User.find(evaluation[0]).username%>さん
   </li>
 <%end%>
 
+<hr color = "green">
+
 <p>不適切と報告された画像</p>
-<ol>
+<table border="1">
+  <th>画像</th>
+  <th>処理</th>
   <%@reported_images.each do |reported_image|%>
-    <li>
-    <%= link_to "確認する","#{reported_image.image.url}"%>
-    /
-    <%= link_to "削除する",prepared_image_path("#{reported_image.id}"), method: :delete%>
+    <tr>
+      <td>
+        <%= image_tag "#{reported_image.image.url}", :size => '80x80' %>
+      </td>
 
-
-    </li>
+      <td>
+        <%= link_to "確認する","#{reported_image.image.url}"%>
+        /
+        <%= link_to "削除する",prepared_image_path("#{reported_image.id}"), method: :delete%>
+      </td>
+    </tr>
   <%end%>
-</ol>
+</table>
 
-<p>分類された画像</p>
-<%@categolized_images.each do |categolized_image|%>
-  <%= form_for TrainingImage.new do |f|%>
-    <p>
-    <%= f.hidden_field :image_path, :value => "#{categolized_image.prepared_image.image.url}"%>
-    <%= f.hidden_field :categolized_image_id, :value => "#{categolized_image.id}"%>
-    <%= f.hidden_field :name, :value => "#{categolized_image.name}"%>
-    <%= f.hidden_field :start_x, :value => "#{categolized_image.start_x}"%>
-    <%= f.hidden_field :start_y, :value => "#{categolized_image.start_y}"%>
-    <%= f.hidden_field :end_x, :value => "#{categolized_image.end_x}"%>
-    <%= f.hidden_field :end_y, :value => "#{categolized_image.end_y}"%>
-    <%= f.submit "#{categolized_image.name}の画像をトリミングする。"%>
-    </p>
+<hr color = "green">
+
+<p>分類された画像情報</p>
+<table border="1">
+  <tr>
+    <th>元画像</th>
+    <th>分類一覧</th>
+    <th>評価</th>
+    <th>トリミング</th>
+  </tr>
+
+  <% @prepared_images.each do |prepared_image|%>
+
+    <% saved_number = 0%>
+    <% prepared_image.categolized_images.each do |c|%>
+      <% saved_number += c.saved%>
+    <% end %>
+    <% if prepared_image.categolized_images.count == saved_number %>
+      <% next%>
+    <%else%>
+
+      <tr>
+
+        <td>
+          <%= image_tag "#{prepared_image.image.url}", :size => '80x80' %>
+        </td>
+
+        <td>
+          <% prepared_image.categolized_images.each do |categolized_image|%>
+            <% if categolized_image.saved == 1%>
+              <% next%>
+            <%else%>
+              <p>・<%= categolized_image.name%></p>
+            <%end%>
+          <%end%>
+        </td>
+
+        <td>
+          <% prepared_image.categolized_images.each do |categolized_image|%>
+            <% if categolized_image.saved == 1%>
+              <% next%>
+            <%else%>
+              <p>・<%= categolized_image.evaluations.sum(:evaluation)%></p>
+            <%end%>
+          <%end%>
+        </td>
+
+        <td>
+          <% prepared_image.categolized_images.each do |categolized_image|%>
+            <% if categolized_image.saved == 1%>
+              <% next%>
+            <%else%>
+              <%= form_for TrainingImage.new do |f|%>
+                <p>
+                <%= f.hidden_field :image_path, :value => "#{categolized_image.prepared_image.image.url}"%>
+                <%= f.hidden_field :categolized_image_id, :value => "#{categolized_image.id}"%>
+                <%= f.hidden_field :name, :value => "#{categolized_image.name}"%>
+                <%= f.hidden_field :start_x, :value => "#{categolized_image.start_x}"%>
+                <%= f.hidden_field :start_y, :value => "#{categolized_image.start_y}"%>
+                <%= f.hidden_field :end_x, :value => "#{categolized_image.end_x}"%>
+                <%= f.hidden_field :end_y, :value => "#{categolized_image.end_y}"%>
+                <%= f.submit "#{categolized_image.name}の画像をトリミングする。"%>
+                </p>
+              <%end%>
+            <%end%>
+          <%end%>
+        </td>
+
+      </tr>
+    <%end%>
   <%end%>
-<%end%>
+</table>
+

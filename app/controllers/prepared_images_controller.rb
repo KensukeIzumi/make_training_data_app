@@ -11,7 +11,7 @@ class PreparedImagesController < ApplicationController
   def show
     @prepared_image = PreparedImage.find(params[:id])
 
-    @categolized_images = CategolizedImage.where("prepared_image_id = ?",params[:id]).group("name").order("evaluation DESC").uniq
+    @categolized_images = CategolizedImage.where("prepared_image_id = ?",params[:id])
 
     prepared_images = PreparedImage.where(["view_count < ? and delete_flag != ?",5,1])
     number = prepared_images.count
@@ -29,10 +29,8 @@ class PreparedImagesController < ApplicationController
 
   def destroy
     @prepared_image = PreparedImage.find(params[:id])
-    
-    logger.debug "hoge1"
+
     filepath = @prepared_image.image.url
-    logger.debug "hoge2"
 
     if @prepared_image.destroy && File.delete("#{filepath}")
       redirect_to admin_home_index_path

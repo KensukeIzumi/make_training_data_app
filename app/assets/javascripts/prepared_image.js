@@ -27,9 +27,6 @@ $(function(){
               });
 
 });
-$("#categolize").click(function(){
-        alert("画像を１件登録しました。");
-        });
 $("#report").click(function(){
         alert("ご協力ありがとうございます。");
         });

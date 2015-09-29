@@ -4,7 +4,7 @@ class ReportsController < ApplicationController
     @prepared_image = PreparedImage.find(params[:prepared_image_id])
     @report = Report.new(user_id: current_user.id,prepared_image_id: @prepared_image.id )
 
-    if @prepared_image.reports.count >= 5
+    if @prepared_image.reports.count >= 2
       @prepared_image.delete_flag = 1
     else
       @prepared_image.delete_flag = 0
@@ -23,7 +23,7 @@ class ReportsController < ApplicationController
  def destroy
    @prepared_image =  PreparedImage.find(params[:prepared_image_id])
 
-   if @prepared_image.reports.count >= 5
+   if @prepared_image.reports.count >= 2
       @prepared_image.delete_flag = 1
    else
       @prepared_image.delete_flag = 0

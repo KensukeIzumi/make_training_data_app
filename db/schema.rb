@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150928135152) do
+ActiveRecord::Schema.define(version: 20150929025051) do
 
   create_table "categolized_images", force: :cascade do |t|
     t.integer  "start_x",           limit: 4
@@ -23,7 +23,6 @@ ActiveRecord::Schema.define(version: 20150928135152) do
     t.integer  "prepared_image_id", limit: 4
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
-    t.integer  "evaluation",        limit: 4,   default: 0
     t.integer  "saved",             limit: 4,   default: 0
   end
 
