@@ -50,7 +50,7 @@ function draw_image(){
 
 function draw_rect(){
   $('.rect_resource').each(function(){
-
+  
     var coordinates = $("input",this)
     var start_x = coordinates[0].value;
   var start_y = coordinates[1].value;
@@ -64,19 +64,23 @@ function draw_rect(){
     console.log(document)
 
 
-    var img = new Image();
-  img.src = document.getElementById("prepared_image").value;
 
   var canvas = document.getElementById('canvas');
   var ctx = canvas.getContext('2d');
 
+  var img = new Image();
+  img.src = document.getElementById("prepared_image").value;
+
   img.onload = function(){
+
+    ctx.font="bold 20px 'Arial'";
+    ctx.fillStyle = 'rgb(255,215,0)';
+    ctx.fillText(name,start_x,start_y);
+
     ctx.beginPath();
     ctx.strokeStyle = 'rgb(192,80,77)';
     ctx.lineWidth = 5;
     ctx.strokeRect(start_x,start_y,end_x - start_x,end_y - start_y);
-    ctx.font='bold 20px';
-    ctx.fillText(name,start_x,start_y);
   }
   });
 }
