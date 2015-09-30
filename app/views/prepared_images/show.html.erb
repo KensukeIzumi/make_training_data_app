@@ -1,10 +1,15 @@
 <%= stylesheet_link_tag"prepared_images",:media=>"all"%>
 <%= javascript_include_tag "application" %> 
+<%= javascript_include_tag "prepared_images" %>
 
 <p>・食品を囲って下のフォームに食品名を入力してください</p>
 <p>・適切な分類名が既に履歴一覧に表示されている場合、評価ボタンを押して次に進んでください。</p>
 
-<img src=<%=@prepared_image.image.url%> id = "target" >
+<canvas id="canvas" class = "target" width = "1200" height = "1200"></canvas>
+
+<form>
+  <input id="prepared_image" type = "hidden" value = "<%=@prepared_image.image.url%>">
+</form>
 
 <form method = "post" action = "<%= categolized_images_path%>">
   <input name = "start_x" value = "始点のx座標" readonly = "readonly">
@@ -38,6 +43,16 @@
     <%end%>
 
     </li>
+
+    <form class = "rect_resource">
+      <input name = "show_start_x" type = "hidden" value = "<%= categolized_image.start_x%>">
+      <input name = "show_start_y" type = "hidden" value = "<%= categolized_image.start_y%>">
+      <input name = "show_end_x" type = "hidden" value = "<%= categolized_image.end_x%>">
+      <input name = "show_end_y" type = "hidden" value = "<%= categolized_image.end_y%>">
+      <input name = "show_name" type = "hidden" value = "<%= categolized_image.name%>">
+
+    </form>
+
   <% end %>
 </div>
 

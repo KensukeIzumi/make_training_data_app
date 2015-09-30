@@ -7,5 +7,11 @@ class CategolizedImage < ActiveRecord::Base
   validates :name,
     uniqueness: {
     scope: [:prepared_image_id]
-  }
+  },
+    presence: true
+
+  validates :start_x , numericality: true
+  validates :start_y , numericality: true
+  validates :end_x , numericality: true
+  validates :end_y , numericality: true
 end

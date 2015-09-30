@@ -65,22 +65,22 @@
             <% if categolized_image.saved == 1%>
               <% next%>
             <%else%>
-              <p>・<%= categolized_image.name%></p>
+              <p>・<%= link_to "#{categolized_image.name}",categolized_image_path("#{categolized_image.id}")%></p>
             <%end%>
           <%end%>
         </td>
 
-        <td>
+        <td align="center">
           <% prepared_image.categolized_images.each do |categolized_image|%>
             <% if categolized_image.saved == 1%>
               <% next%>
             <%else%>
-              <p>・<%= categolized_image.evaluations.sum(:evaluation)%></p>
+              <p><%= categolized_image.evaluations.sum(:evaluation)%></p>
             <%end%>
           <%end%>
         </td>
 
-        <td>
+        <td align="center">
           <% prepared_image.categolized_images.each do |categolized_image|%>
             <% if categolized_image.saved == 1%>
               <% next%>
