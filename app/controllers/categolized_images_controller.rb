@@ -12,12 +12,20 @@ class CategolizedImagesController < ApplicationController
     @categolized_image.user_id = params[:user_id]
     @categolized_image.prepared_image_id = params[:prepared_image_id]
 
-
     if @categolized_image.save
       redirect_to prepared_image_path(params[:prepared_image_id])
-    else
-      redirect_to prepared_image_path(params[:prepared_image_id]),alert: "履歴と重複しています。評価ボタンを押して次の分類を進めてください、なお評価した回数はそのままあなたの登録枚数に加算されます。"
+    elsif @categolized_image.errors.any?
+      error_messages = Array.new
+      error_max_index = @categolized_image.errors.count - 1
+      @categolized_image.errors.full_messages.each do |msg|
+        error_messages.push("#{msg}")
+      end
+      redirect_to prepared_image_path(params[:prepared_image_id]),alert: "#{error_messages[0..error_max_index ]}"
     end 
+  end
+
+  def show 
+    @categolized_image = CategolizedImage.find(params[:id])
   end
 
 

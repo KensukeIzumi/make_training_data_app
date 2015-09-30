@@ -1,0 +1,32 @@
+<%= javascript_include_tag "application" %> 
+<%= javascript_include_tag "categolized_images"%> 
+
+<p>確認画面</p>
+<p id = "show">画像を表示</p>
+<p><%= link_to "ホーム画面へ",admin_home_index_path%></p>
+<p>
+              <%= form_for TrainingImage.new do |f|%>
+                <p>
+                <%= f.hidden_field :image_path, :value => "#{@categolized_image.prepared_image.image.url}"%>
+                <%= f.hidden_field :categolized_image_id, :value => "#{@categolized_image.id}"%>
+                <%= f.hidden_field :name, :value => "#{@categolized_image.name}"%>
+                <%= f.hidden_field :start_x, :value => "#{@categolized_image.start_x}"%>
+                <%= f.hidden_field :start_y, :value => "#{@categolized_image.start_y}"%>
+                <%= f.hidden_field :end_x, :value => "#{@categolized_image.end_x}"%>
+                <%= f.hidden_field :end_y, :value => "#{@categolized_image.end_y}"%>
+                <%= f.submit "#{@categolized_image.name}の画像をトリミングする。"%>
+                </p>
+              <%end%>
+              </p>
+<canvas id="show_image" width = "1200" height = "1200">
+</canvas>
+
+    <form>
+      <input id = "start_x" type = "hidden" value = "<%= @categolized_image.start_x%>">
+      <input id = "start_y" type = "hidden" value = "<%= @categolized_image.start_y%>">
+      <input id = "end_x" type = "hidden" value = "<%= @categolized_image.end_x%>">
+      <input id = "end_y" type = "hidden" value = "<%= @categolized_image.end_y%>">
+      <input id = "image_path" type = "hidden" value = "<%= @categolized_image.prepared_image.image.url%>">
+
+    </form>
+

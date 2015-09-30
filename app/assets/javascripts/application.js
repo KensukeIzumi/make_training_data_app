@@ -13,6 +13,5 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require_tree .
 //= require jcrop/js/jquery.min
 //= require jcrop/js/jquery.Jcrop.min
