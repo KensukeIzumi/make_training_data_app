@@ -5,7 +5,7 @@ class HomeController < ApplicationController
     end
 
     @user = current_user
-    #ここで最初に渡す画像のIDをランダムで取得
+    #最初に渡す画像のIDをランダムで取得
     prepared_images = PreparedImage.where(["view_count < ? and delete_flag != ? ",5,1])
     number = prepared_images.count
     random_number = rand(number)
