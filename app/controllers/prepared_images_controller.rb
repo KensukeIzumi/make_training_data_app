@@ -9,7 +9,14 @@ class PreparedImagesController < ApplicationController
   end
 
   def show
+    if (current_user.admin?)
+      redirect_to new_user_session_path , :notice  => "正規の画面よりご利用ください"
+    end
+
     @prepared_image = PreparedImage.find(params[:id])
+
+    #@prepared_image.view_count += 1
+    #@prepared_image.save
 
     @categolized_images = CategolizedImage.where("prepared_image_id = ?",params[:id])
 
@@ -20,20 +27,17 @@ class PreparedImagesController < ApplicationController
     @random_number = next_prepared_image[0].id    
   end
 
-  def index 
-    @prepared_image = prepared_images[number]
-    #  @prepared_image.view_count += 1
-    #  @prepared_image.save
-    @random_number = number 
-  end
-
+  
   def destroy
     @prepared_image = PreparedImage.find(params[:id])
+=begin
+filepath = @prepared_image.image.url
+File.delete("#{filepath}")
+=end
+    @prepared_image.destroy
 
-    filepath = @prepared_image.image.url
-
-    if @prepared_image.destroy && File.delete("#{filepath}")
-      redirect_to admin_home_index_path
+    if params[:from]=='list'
+      redirect_to :back
     else 
       redirect_to admin_home_index_path
     end

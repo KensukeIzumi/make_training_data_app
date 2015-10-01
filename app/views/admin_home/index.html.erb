@@ -27,7 +27,7 @@
       <td>
         <%= link_to "確認する","#{reported_image.image.url}"%>
         /
-        <%= link_to "削除する",prepared_image_path("#{reported_image.id}"), method: :delete%>
+        <%= link_to "削除する",prepared_image_path("#{reported_image.id}",:from=>"list"), method: :delete%>
       </td>
     </tr>
   <%end%>

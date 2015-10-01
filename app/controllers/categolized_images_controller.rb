@@ -3,6 +3,10 @@
 class CategolizedImagesController < ApplicationController
 
   def create
+    if (current_user.admin?)
+      redirect_to new_user_session_path , :notice  => "正規の画面よりご利用ください"
+    end
+
     @categolized_image = CategolizedImage.new
     @categolized_image.name = params[:name]
     @categolized_image.start_x = params[:start_x]
