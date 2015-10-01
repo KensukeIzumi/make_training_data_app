@@ -1,61 +1,69 @@
 <%= stylesheet_link_tag"prepared_images",:media=>"all"%>
 <%= javascript_include_tag "application" %> 
 <%= javascript_include_tag "prepared_images" %>
+<div class = "main">
+  <fieldset class = "rule">
+    <legend>手順</legend>
+  <li>食品を囲って下のフォームに食品名を入力してください</li>
+  <li>適切な分類名が既に履歴一覧に表示されている場合、評価ボタンを押して次に進んでください。</li>
+  </fieldset>
+  <canvas id="canvas" class = "target" width = "700" height = "600"></canvas>
 
-<p>・食品を囲って下のフォームに食品名を入力してください</p>
-<p>・適切な分類名が既に履歴一覧に表示されている場合、評価ボタンを押して次に進んでください。</p>
+  <form>
+    <input id="prepared_image" type = "hidden" value = "<%=@prepared_image.image.url%>">
+  </form>
 
-<canvas id="canvas" class = "target" width = "800" height = "600"></canvas>
 
-<form>
-  <input id="prepared_image" type = "hidden" value = "<%=@prepared_image.image.url%>">
-</form>
+  <%if !@categolized_images.empty?%>
+    <fieldset class = "other_categolizations" >
+      <legend> 他のユーザーの分類</legend>
 
-<form method = "post" action = "<%= categolized_images_path%>">
-  <input name = "start_x" value = "始点のx座標" readonly = "readonly">
-  <input name = "start_y" value = "始点のy座標" readonly = "readonly"></br>
-  <input name = "end_x" value = "終点のx座標" readonly = "readonly">
-  <input name = "end_y" value = "終点のy座標" readonly = "readonly"></br>
-  <input name = "name" value = "名前">
-  <input type = "hidden" name = "user_id" value = "<%=current_user.id %>">
-  <input type = "hidden" name = "prepared_image_id" value = "<%=@prepared_image.id%>">
+      <% @categolized_images.each do |categolized_image|%>
+        <li>
 
-  <input id = "categolize" type = "submit" value = "登録">
-</form>
+        <%= categolized_image.name%>
+        <%if Evaluation.exists?(:evaluate_user_id =>"#{current_user.id}",:categolized_image_id => "#{categolized_image.id}") %>
+          <%= link_to '評価を取り消す',categolized_image_evaluations_path(categolized_image.id),method: :delete%>
+        <%else%>
+          <%= link_to 'この分類を評価する',categolized_image_evaluations_path(categolized_image.id, evaluation: 1), method: :post%>
+          <%= link_to 'この分類を評価しない',categolized_image_evaluations_path(categolized_image.id, evaluation: -1), method: :post%>
+        <%end%>
 
-<%if Report.exists?(:user_id =>"#{current_user.id}",:prepared_image_id => "#{@prepared_image.id}") %>
-  <%= link_to '報告を取り消す',prepared_image_reports_path(@prepared_image.id), method: :delete  %>
-<%else%>
-  <%= link_to '不適切な画像として報告',prepared_image_reports_path(@prepared_image.id),method: :post%>
-<%end%>
+        </li>
 
-<div class = "other_categolizations" >
-  <p> 他のユーザーの分類</p>
-  <% @categolized_images.each do |categolized_image|%>
-    <li>
+        <form class = "rect_resource">
+          <input name = "show_start_x" type = "hidden" value = "<%= categolized_image.start_x%>">
+          <input name = "show_start_y" type = "hidden" value = "<%= categolized_image.start_y%>">
+          <input name = "show_end_x" type = "hidden" value = "<%= categolized_image.end_x%>">
+          <input name = "show_end_y" type = "hidden" value = "<%= categolized_image.end_y%>">
+          <input name = "show_name" type = "hidden" value = "<%= categolized_image.name%>">
 
-    <%= categolized_image.name%>
-    <%if Evaluation.exists?(:evaluate_user_id =>"#{current_user.id}",:categolized_image_id => "#{categolized_image.id}") %>
-      <%= link_to '評価を取り消す',categolized_image_evaluations_path(categolized_image.id),method: :delete%>
-    <%else%>
-      <%= link_to 'この分類を評価する',categolized_image_evaluations_path(categolized_image.id, evaluation: 1), method: :post%>
-      <%= link_to 'この分類を評価しない',categolized_image_evaluations_path(categolized_image.id, evaluation: -1), method: :post%>
-    <%end%>
+        </form>
 
-    </li>
+      <% end %>
 
-    <form class = "rect_resource">
-      <input name = "show_start_x" type = "hidden" value = "<%= categolized_image.start_x%>">
-      <input name = "show_start_y" type = "hidden" value = "<%= categolized_image.start_y%>">
-      <input name = "show_end_x" type = "hidden" value = "<%= categolized_image.end_x%>">
-      <input name = "show_end_y" type = "hidden" value = "<%= categolized_image.end_y%>">
-      <input name = "show_name" type = "hidden" value = "<%= categolized_image.name%>">
+    </fieldset>
+  <%end%>
+  <form method = "post" action = "<%= categolized_images_path%>">
+    <input name = "start_x" value = "始点のx座標" readonly = "readonly">
+    <input name = "start_y" value = "始点のy座標" readonly = "readonly"></br>
+    <input name = "end_x" value = "終点のx座標" readonly = "readonly">
+    <input name = "end_y" value = "終点のy座標" readonly = "readonly"></br>
+    <input name = "name" value = "名前">
+    <input type = "hidden" name = "user_id" value = "<%=current_user.id %>">
+    <input type = "hidden" name = "prepared_image_id" value = "<%=@prepared_image.id%>">
 
-    </form>
+    <input id = "categolize" type = "submit" value = "登録">
+  </form>
 
-  <% end %>
+
+  <%if Report.exists?(:user_id =>"#{current_user.id}",:prepared_image_id => "#{@prepared_image.id}") %>
+    <%= link_to '報告を取り消す',prepared_image_reports_path(@prepared_image.id), method: :delete  %>
+  <%else%>
+    <%= link_to '不適切な画像として報告',prepared_image_reports_path(@prepared_image.id),method: :post%>
+  <%end%>
+
+
+  <%= link_to '次の画像へ', "/prepared_images/#{@random_number}",class: 'button_radius'%>
+  <%= link_to 'マイページへ', home_index_path,class: 'button_radius' %>
 </div>
-
-<%= link_to '次の画像へ', "/prepared_images/#{@random_number}",class: 'button_radius'%>
-<%= link_to 'マイページへ', home_index_path,class: 'button_radius' %>
-

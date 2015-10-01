@@ -17,12 +17,16 @@
   color:white;
   background-color: #FF1493;
   border-radius:15px;
-  margin-top:60px;
-  margin-bottom:40px;
-  padding:12px 18px;
+  padding:6px 18px;
   cursor:pointer;
 }
 .button_radius:hover {
   color:white;
   background-color: rgba(192,192,192,1);
+}
+body{
+background-color: rgba(192,192,192,0.2);
+font-family: Lato;
+font-weight: normal;
+color: #444
 }

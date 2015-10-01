@@ -6,6 +6,8 @@ Rails.application.config.assets.precompile += %w( prepared_images.js )
 Rails.application.config.assets.precompile += %w( home.css )
 Rails.application.config.assets.precompile += %w( prepared_images.css )
 Rails.application.config.assets.precompile += %w( categolized_images.js )
+Rails.application.config.assets.precompile += %w( jquery.Jcrop.min.css )
+
 # Add additional assets to the asset load path
 # Rails.application.config.assets.paths << Emoji.images_path
 
