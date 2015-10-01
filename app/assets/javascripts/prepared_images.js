@@ -60,7 +60,7 @@ function draw_rect(){
 
   console.log($(this))
     console.log($("input",this)[0].value)
-    console.log(start_x)
+    console.log(start_y)
     console.log(document)
 
 
@@ -74,12 +74,14 @@ function draw_rect(){
   img.onload = function(){
 
     ctx.font="bold 20px 'Arial'";
-    ctx.fillStyle = 'rgb(255,215,0)';
+    ctx.fillStyle = '#FF0000';
+
+    ctx.textBaseline = "hanging";
     ctx.fillText(name,start_x,start_y);
 
     ctx.beginPath();
     ctx.strokeStyle = 'rgb(192,80,77)';
-    ctx.lineWidth = 5;
+    ctx.lineWidth = 3;
     ctx.strokeRect(start_x,start_y,end_x - start_x,end_y - start_y);
   }
   });

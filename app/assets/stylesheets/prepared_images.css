@@ -1,0 +1,13 @@
+.canvas{
+float: left;
+border: 1px red;
+}
+fieldset{
+border-radius:10px;
+width: 650px;
+margin-bottom: 5px;
+}
+.jcrop-holder{
+background-color: white;
+margin: 0;
+}
