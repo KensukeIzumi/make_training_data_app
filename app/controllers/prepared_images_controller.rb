@@ -27,7 +27,7 @@ class PreparedImagesController < ApplicationController
     @random_number = next_prepared_image[0].id    
   end
 
-  
+
   def destroy
     @prepared_image = PreparedImage.find(params[:id])
 =begin

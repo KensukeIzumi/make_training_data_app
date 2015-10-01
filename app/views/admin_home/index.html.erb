@@ -9,6 +9,7 @@
 <%@top_evaluations.each_with_index do |evaluation,i|%>
   <li>
   第<%=i + 1%>位：<%= User.find(evaluation[0]).username%>さん
+  (<%=evaluation[1]%>)
   </li>
 <%end%>
 

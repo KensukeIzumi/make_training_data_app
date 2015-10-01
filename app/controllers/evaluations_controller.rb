@@ -11,7 +11,7 @@ class EvaluationsController < ApplicationController
         redirect_to prepared_image_path(@prepared_image.id),alert: "この分類は評価できません。"
       end
     else
-        redirect_to prepared_image_path(@prepared_image.id),:notice => "ご自分の分類は評価できません。"
+      redirect_to prepared_image_path(@prepared_image.id),:notice => "ご自分の分類は評価できません。"
     end
   end
 
