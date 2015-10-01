@@ -17,8 +17,7 @@
                 </p>
               <%end%>
               </p>
-<canvas id="show_image" width = "1200" height = "1200">
-</canvas>
+  <canvas id="show_image" class = "target" width = "<%= Magick::Image.read("#{Rails.root}/public#{@categolized_image.prepared_image.image.url}").first.columns%>" height = "<%= Magick::Image.read("#{Rails.root}/public#{@categolized_image.prepared_image.image.url}").first.rows%>"></canvas>
 
     <form>
       <input id = "start_x" type = "hidden" value = "<%= @categolized_image.start_x%>">
