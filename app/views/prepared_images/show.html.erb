@@ -64,7 +64,7 @@
     <%= link_to '不適切な画像として報告',prepared_image_reports_path(@prepared_image.id),method: :post,class: 'report'%><br>
   <%end%>
 
-
+  <br>
   <%= link_to '次の画像へ', "/prepared_images/#{@random_number}",class: 'button_radius'%>
   <%= link_to 'マイページへ', home_index_path,class: 'button_radius' %>
 </div>
